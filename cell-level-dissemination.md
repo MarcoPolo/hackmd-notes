@@ -138,7 +138,8 @@ In contrast, an announce, request, respond flow requires 1.5 RTT.
 
 ## Publishing strategy
 
-Eager pushing is faster than pullingrequest/response, but risks sending duplicate information.
+Eager pushing is faster than request/response, but risks sending duplicate
+information.
 
 The publishing strategy should therefore be:
 
@@ -152,8 +153,8 @@ In a scenario with sharded mempools, it's reasonable for a node to eagerly push
 cells it knows a peer would not have due to its sharding strategy.
 
 Some duplicate information is expected and required as a form of resiliency. The
-amount of duplicates can be tuned by adjusting the probability of eager
-pushing and the probability of pullrequesting from a peer.
+amount of duplicates can be tuned by adjusting the probability of eager pushing
+and the probability of requesting from a peer.
 
 However, even a simple naive strategy should significantly outperform our
 current full-column approach by leveraging local data from the mempool.
@@ -188,7 +189,7 @@ risk of larger duplicate messages.
 ## Next steps
 
 - Specify the getBlobs V3 api that supports returning partial blobs.
-- Implement the Partial Messsage Extension in Rust libp2p. (in progress)
+- Implement the Partial Message Extension in Rust libp2p. (in progress)
 - Specify the partial message encoding of DataColumnSidecars.
 - Integrate into CL clients.
 - Deploy on testnets
