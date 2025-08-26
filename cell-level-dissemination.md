@@ -1,4 +1,3 @@
-
 # Gossipsub's Partial Messages Extension and Cell Level dissemination
 _or how to make blob propagation faster and more efficient_
 
@@ -133,12 +132,9 @@ For both examples, assume:
 ```
 
 Note that peers request data before knowing what a peer has. The request is part
-of the peer's IWANT bitmap, which is sent alongside its IHAVE bitmap. In
-contrast with a
-reducesannounce, request, respond, flow theis res latency from one round trip to half a duces the latency by
-half when the peer can provide the data. Half a round trip rather than a full
-round trip.
-
+of the peer's IWANT bitmap, which is sent alongside its IHAVE bitmap. This means
+data can be received in a single RTT when the peer can provide the data.
+In contrast, an announce, request, respond flow requires 1.5 RTT.
 
 ## Publishing strategy
 
@@ -161,14 +157,14 @@ pushing and the probability of pullrequesting from a peer.
 
 However, even a simple naive strategy should significantly outperform our
 current full-column approach by leveraging local data from the mempool.
-Duplicates partial messages would result in duplicate cells rather than
+Duplicate partial messages would result in duplicate cells rather than
 duplicate full columns.
 
 ## Devnet Proof of Concept
 
-There is a work-in-progress [Go implementation of the Partial Message Extension](https://github.com/libp2p/go-libp2p-pubsub/pull/631). There is also a [patch to Prysm](https://github.com/OffchainLabs/prysm/compare/fusaka-devnet-3...MarcoPolo:marco%2FpeerDAS-partial?body=&expand=1)
+There is a work-in-progress [Go implementation of the Partial Message Extension](https://github.com/libp2p/go-libp2p-pubsub/pull/631). There is also a
+[patch to Prysm](https://github.com/OffchainLabs/prysm/compare/fusaka-devnet-3...MarcoPolo:marco%2FpeerDAS-partial?body=&expand=1)
 that uses partial messages.
-
 
 As a proof of concept, we created a Kurtosis devnet using the patched Prysm
 clients connected to patched geth clients (to return partial blobs in the
